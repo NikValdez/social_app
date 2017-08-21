@@ -16,6 +16,10 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'materialize-sass', '~> 0.96.1'
 gem 'devise', '~> 4.2'
+gem 'carrierwave', '~> 0.11.2'
+gem "mini_magick"
+gem 'acts_as_votable', '~> 0.10.0'
+
 
 group :development, :test do
   gem 'byebug', platform: :mri

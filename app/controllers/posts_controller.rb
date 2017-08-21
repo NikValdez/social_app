@@ -23,10 +23,12 @@ class PostsController < ApplicationController
 
   # POST /posts
   # POST /posts.json
-    def create
-    @post = current_user.posts.new(post_params)
+  def create
+    @post = Post.new(post_params) do |post|
+      post.user = current_user
+    end
     if @post.save
-      redirect_to root_path
+      redirect_to @post
     else
       redirect_to root_path, notice: @post.errors.full_messages.first
     end
@@ -56,6 +58,21 @@ class PostsController < ApplicationController
     end
   end
 
+  def upvote 
+  @post = Post.find(params[:id])
+  @post.upvote_by current_user
+  redirect_to :back
+end  
+
+def downvote
+  @post = Post.find(params[:id])
+  @post.downvote_by current_user
+  redirect_to :back
+end
+
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
@@ -64,6 +81,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:attachment, :content, :user_id)
+      params.require(:post).permit(:attachment, :content, :user_id, :image)
     end
 end
